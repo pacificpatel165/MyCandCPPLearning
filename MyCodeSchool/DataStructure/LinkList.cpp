@@ -13,7 +13,7 @@ void InsertNodeAtBegin(Node **pointerToHead, int data)
 {
     Node *temp = new Node();
     temp->data = data;
-    temp->data = *pointerToHead;
+    temp->link = *pointerToHead;
     *pointerToHead = temp;
 }
 
