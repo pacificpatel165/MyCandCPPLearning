@@ -118,9 +118,11 @@ void ReverseLinkList_Recursive(Node **pointerToHead)
     ReverseLinkList_Recursive(&(rest));
     // cout << "After recursion =====================================" << endl;
     // cout << "Address of first->next --> " << first->next << endl;
+    /* Attach the rest next to first */
     first->next->next = first;
     // cout << "Address of first --> " << first << " and first-->data  " << first->data << endl;
 
+    /* Diconnect from rest */
     first->next = NULL;
 
     /* fix the head pointer */
