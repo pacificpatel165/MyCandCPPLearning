@@ -6,7 +6,7 @@ void SelectionSort(int A[], int n)
 {
     for(int i = 0; i < n-1; i++)
     {
-        int iMin = i;
+        int iMin = i; // Assume this is minimum index
         for(int j = i+1; j < n; j++)
         {
             if(A[j] < A[iMin])
@@ -15,9 +15,7 @@ void SelectionSort(int A[], int n)
             }
         }
         // Swap the items
-        int temp = A[i];
-        A[i] = A[iMin];
-        A[iMin] = temp;
+        swap(A[i], A[iMin]);
     }
 }
 
@@ -31,9 +29,7 @@ void BubbleSort(int A[], int n)
             if(A[j] > A[j+1])
             {
                 // Swap the items
-                int temp = A[j];
-                A[j] = A[j+1];
-                A[j+1] = temp;
+                swap(A[j], A[j+1]);
                 flag = true;
             }
         }
@@ -71,7 +67,7 @@ void Merge(int A[], int L[], int leftCount, int R[], int rightCount)
     // j - to mark the index of right sub-raay (R)
     // k - to mark the index of merged subarray (A)
     
-    while(i<leftCount && j< rightCount) 
+    while((i < leftCount) && (j < rightCount)) 
     {
         if(L[i]  < R[j])
         {
@@ -121,6 +117,37 @@ void MergeSort(int A[], int n)
     Merge(A, L, left, R, right);  // Merging L and R into A as sorted list.
 }
 
+int Partition(int A[], int start, int end)
+{
+    int pivot = A[end]; // Take the right most value as pivot
+    int partitionIndex = start;
+
+    for(int i = start; i < end; i++)
+    {
+        if(A[i] <= pivot)
+        {
+            // Swap the elements
+            swap(A[i], A[partitionIndex]);
+            partitionIndex++;
+        }
+    }
+    // Swap the partitionIndex element eith last right element
+    swap(A[partitionIndex], A[end]);
+
+    // Return partitioning index
+    return partitionIndex;
+}
+
+void QuickSort(int A[], int start, int end)
+{
+    if(start < end)
+    {
+        int partitionIndex = Partition(A, start, end);
+        QuickSort(A, start, partitionIndex -1);
+        QuickSort(A, partitionIndex, end);
+    }
+}
+
 void printArray(int A[], int n)
 {
     cout << "[";
@@ -145,29 +172,51 @@ int main()
     int array[] = {2, 7, 1, 8, 4, 9, 0, 5, 6, 3};
     int arraySize = sizeof(array)/sizeof(int);
     cout << "Given Array " << endl;
+    cout << "=====================" << endl;
     printArray(array, arraySize);
+    cout << "=====================" << endl;
 
     SelectionSort(array, arraySize);
+    cout << "---------------------" << endl;
     cout << "After Selection Sort " << endl;
+    cout << "---------------------" << endl;
     printArray(array, arraySize);
+    cout << endl;
 
     int array1[] = {2, 7, 1, 8, 4, 9, 0, 5, 6, 3};
     arraySize = sizeof(array1)/sizeof(int);
     BubbleSort(array1, arraySize);
+    cout << "---------------------" << endl;
     cout << "After Bubble Sort " << endl;
+    cout << "---------------------" << endl;
     printArray(array1, arraySize);
+    cout << endl;
 
     int array2[] = {2, 7, 1, 8, 4, 9, 0, 5, 6, 3};
     arraySize = sizeof(array2)/sizeof(int);
     InsertionSort(array2, arraySize);
+    cout << "---------------------" << endl;
     cout << "After Insertion Sort " << endl;
+    cout << "---------------------" << endl;
     printArray(array2, arraySize);
+    cout << endl;
 
     int array3[] = {2, 7, 1, 8, 4, 9, 0, 5, 6, 3};
     arraySize = sizeof(array3)/sizeof(int);
     MergeSort(array3, arraySize);
+    cout << "---------------------" << endl;
     cout << "After Merge Sort " << endl;
+    cout << "---------------------" << endl;
     printArray(array3, arraySize);
+    cout << endl;
+
+    int array4[] = {2, 7, 1, 8, 4, 9, 0, 5, 6, 3};
+    arraySize = sizeof(array4)/sizeof(int);
+    QuickSort(array4, 0, (arraySize -1));
+    cout << "---------------------" << endl;
+    cout << "After Quick Sort " << endl;
+    cout << "---------------------" << endl;
+    printArray(array4, arraySize);
 
     return 0;
 }
