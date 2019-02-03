@@ -130,6 +130,36 @@ void ReverseLinkList_Recursive(Node **pointerToHead)
     //cout << "Address of rest --> " << rest << " and rest-->data  " << rest->data << endl;
 }
 
+void ReverseLinkList_Recursive_Simple(Node **pointerToHead)
+{
+    Node *mynode = *pointerToHead;
+    if(mynode == NULL)
+        return;
+    if(mynode->next == NULL) // breaking rule for recursion
+    {
+        *pointerToHead = mynode;
+        return;
+    }
+    ReverseLinkList_Recursive_Simple(mynode->next);
+    mynode->next->next = mynode;
+    mynode->next = NULL;
+}
+
+Node *ReverseLinkList_Recursive_SimpleNode(Node **pointerToHead)
+{
+    Node *mynode = *pointerToHead;
+    if(mynode == NULL)
+        return;
+    if(mynode->next == NULL) // breaking rule for recursion
+    {
+        *pointerToHead = mynode;
+        return mynode;
+    }
+    Node *tempnode = ReverseLinkList_Recursive_SimpleNode(mynode->next);
+    tempnode->next = mynode;
+    mynode->next = NULL;
+    return mynode;
+}
 
 void DeleteFullLinkList(Node **pointerToHead)
 {
